@@ -23,18 +23,21 @@ export class LoginComponent implements OnInit {
   }
   login() { 
     this.sessionService.authenticate(this.myForm.value).subscribe(resp=>{
+      console.log(resp)
+      
       if(resp.status == 200){ 
           this.toastr.success(resp.msg,"",{timeOut:3000})
-          if(resp.data.roleId == 1){
-              //
-          }else if(resp.data.roleId == 2){
+          if(resp.data.roleId== 2){
+            localStorage.setItem("firstName",resp.data.firstName)
+            localStorage.setItem("authToken",resp.data.authToken)
             this.router.navigateByUrl("/user/home")
+          }else if(resp.data.roleId == 1){
           }else{
 
           }
           
-      }else if(resp.status == -1){
-        this.toastr.error(resp.msg,"",{timeOut:3000})
+      }else if(resp.data.code == 400){
+        this.toastr.error(resp.messsage,"",{timeOut:3000})
       }
     })
   }

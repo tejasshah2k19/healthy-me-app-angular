@@ -13,7 +13,7 @@ export class SignupComponent implements OnInit {
 
   constructor(private sessionService:SessionService,private toastr:ToastrService,private router:Router) { 
     this.myForm = new FormGroup({
-       firstName:new FormControl(),
+      firstName:new FormControl(),
        email:new FormControl(),
        password:new FormControl()
       
