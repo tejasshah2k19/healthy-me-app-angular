@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { IngredientService } from '../../service/ingredient.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { IngredientService } from '../../service/ingredient.service';
 export class AddIngredientComponent implements OnInit {
 
   myForm: FormGroup
-  constructor(private igService:IngredientService,private router:Router) {
+  constructor(private igService:IngredientService,private router:Router,private toastr:ToastrService) {
 
     this.myForm = new FormGroup({
       active: new FormControl(1),
@@ -26,15 +27,15 @@ export class AddIngredientComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
+  statusResp =undefined 
   saveIngredient(){
     
     this.igService.saveIngredient(this.myForm.value).subscribe(resp=>{
-      console.log(resp)
-      if(resp.status == 420){
-        this.router.navigateByUrl("/login")
-      }else{
-        alert("done")
+      if(resp.status == 200){
+         this.toastr.success(resp.msg,"",{timeOut:3000})
+         this.router.navigateByUrl("/user/home")
+      }else if(resp.status == -1){
+        this.toastr.error(resp.msg,"",{timeOut:3000})
       }
     })
 

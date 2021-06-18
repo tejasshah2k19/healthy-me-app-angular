@@ -1,0 +1,17 @@
+<br><BR>
+        <a routerLink="/user/home">Home</a>
+    <br><BR>
+<table border="1" width="30%" height="30%" align="center">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Source</th>
+    </tr>
+
+    <tr *ngFor="let i of ingredients">
+        <td>{{i.ingredientId}}</td>
+        <td>{{i.name}}</td>
+        <td>{{i.source}}</td>
+    </tr>
+
+</table>
